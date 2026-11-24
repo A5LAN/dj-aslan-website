@@ -80,6 +80,235 @@ function GalleryPage() {
   )
 }
 
+const wdMoments = [
+  { n: '01', title: 'The Grand Entrance', body: 'The lights shift and the room turns toward the door. You are announced into a space that already feels like yours.', img: '/images/wedding-main.jpg' },
+  { n: '02', title: 'Dinner and Toasts', body: 'Warm light and a considered soundtrack hold the room while the words that matter are spoken.', img: '/images/wedding-setup.jpg' },
+  { n: '03', title: 'The First Dance', body: 'Light, sound, and a low rolling fog, where the venue allows, turn one song into the scene you will replay for years.', img: '/images/wedding-main-2.jpg' },
+  { n: '04', title: 'The Dance Floor', body: 'The energy builds, and so does the room. We read the crowd, move the lighting with it, and keep everyone in it.', img: '/images/wedding-main-3.jpg' },
+  { n: '05', title: 'The Last Song', body: 'A finale chosen with you, so the night ends on the exact feeling you want everyone to carry home.', img: '/images/wedding-main-4.jpg' },
+]
+
+const wdTiers = [
+  { key: 'tier1', label: 'Collection I', name: 'Essential', tagline: 'The foundation of a great night.', items: ['Open-format DJ for your full reception', 'Professional sound system for ceremony & reception', 'Wireless microphones for toasts & speeches'] },
+  { key: 'tier2', label: 'Collection II', name: 'Signature', tagline: 'Where the room begins to transform.', items: ['Everything in Essential', 'Custom uplighting for your venue', 'Dedicated MC & timeline coordination with your planner'] },
+  { key: 'tier3', label: 'Collection III', name: 'Prestige', tagline: 'The full ASLAN experience.', items: ['Everything in Signature', 'First-dance fog effect (venue permitting)', 'Monogram & dance-floor lighting design'] },
+]
+
+function WeddingsPage() {
+  const [status, setStatus] = useState('idle')
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    document.title = 'Weddings | ASLAN | DJ for Weddings & Corporate Events | Toronto & the GTA'
+    return () => { document.title = HOME_TITLE }
+  }, [])
+
+  async function onSubmit(e) {
+    e.preventDefault()
+    const form = e.target
+    setStatus('sending')
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      })
+      if (!res.ok) throw new Error('request failed')
+      form.reset()
+      setStatus('ok')
+    } catch {
+      setStatus('err')
+    }
+  }
+
+  return (
+    <div className="wd">
+      <header className="wd-nav">
+        <nav className="wd-nav-inner">
+          <a href="#wd-difference" className="wd-logo">ASLAN <span>GROUP</span></a>
+          <div className="wd-navlinks">
+            <a href="#wd-difference">The Difference</a>
+            <a href="#wd-night">Your Night</a>
+            <a href="#wd-collections">Collections</a>
+            <a href="#wd-inquire" className="wd-btn wd-btn-line" style={{ padding: '13px 26px', fontSize: 12 }}>Book a Consultation</a>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        <section id="wd-difference" className="wd-section wd-light">
+          <div className="wd-inner">
+            <div className="wd-head">
+              <div className="wd-eyebrow">The ASLAN Difference</div>
+              <h2 className="wd-h2">Anyone can play music.<br />We create the moment.</h2>
+              <p className="wd-lede">A great playlist fills a room. An experience changes it. Here is how the night feels different when ASLAN Group is in charge of it.</p>
+              <div className="wd-cta-row">
+                <a href="#wd-inquire" className="wd-btn wd-btn-ink">Book a Consultation</a>
+                <a href="#wd-collections" className="wd-btn wd-btn-ink-line">Explore the Collections</a>
+              </div>
+            </div>
+
+            <div className="wd-compare">
+              <div className="wd-compare-col std">
+                <div className="wd-compare-label">A standard wedding DJ</div>
+                <div className="wd-compare-title">Plays the songs.</div>
+                <div className="wd-compare-list">
+                  <div className="wd-compare-item">Brings a speaker and a microphone</div>
+                  <div className="wd-compare-item">Makes the announcements</div>
+                  <div className="wd-compare-item">Works from a playlist</div>
+                  <div className="wd-compare-item">Packs up when the last song ends</div>
+                </div>
+              </div>
+              <div className="wd-compare-col us">
+                <div className="wd-compare-label">ASLAN Group</div>
+                <div className="wd-compare-title">Creates the memory.</div>
+                <div className="wd-compare-list">
+                  <div className="wd-compare-item">Entertainers and a team who run the room, not just the music</div>
+                  <div className="wd-compare-item">Uplighting designed around your venue</div>
+                  <div className="wd-compare-item">A first dance wrapped in atmosphere, with fog where the venue allows</div>
+                  <div className="wd-compare-item">A night directed moment by moment</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="wd-night" className="wd-section wd-dark">
+          <div className="wd-inner">
+            <div className="wd-head">
+              <div className="wd-script" style={{ fontSize: 'clamp(44px,5.4vw,68px)' }}>Your night,</div>
+              <h2 className="wd-h2" style={{ margin: 0 }}>moment by moment</h2>
+              <p className="wd-lede">From the first step into the room to the final song, every moment is shaped on purpose.</p>
+            </div>
+            <div className="wd-night">
+              {wdMoments.map((m, idx) => (
+                <div className={`wd-moment${idx % 2 ? ' rev' : ''}`} key={m.n}>
+                  <div className="wd-moment-text">
+                    <div className="wd-moment-num">{m.n}</div>
+                    <h3 className="wd-moment-title">{m.title}</h3>
+                    <p className="wd-moment-body">{m.body}</p>
+                  </div>
+                  <div className="wd-moment-img">
+                    <img src={m.img} alt={m.title} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="wd-collections" className="wd-section wd-light">
+          <div className="wd-inner">
+            <div className="wd-head">
+              <div className="wd-eyebrow">The Collections</div>
+              <h2 className="wd-h2">Three ways to shape your night</h2>
+              <p className="wd-lede">Each collection builds on the one before it, and each can be extended with add-ons. Pricing is shared in a private consultation, so every quote fits your event.</p>
+            </div>
+
+            <div className="wd-cards">
+              {wdTiers.map((t) => (
+                <div className={`wd-card ${t.key}`} key={t.key}>
+                  <div className="wd-card-label">{t.label}</div>
+                  <h3 className="wd-card-title">{t.name}</h3>
+                  <div className="wd-card-tagline">{t.tagline}</div>
+                  <div className="wd-card-list">
+                    {t.items.map((it) => <div className="wd-card-item" key={it}>{it}</div>)}
+                  </div>
+                  <a href="#wd-inquire" className="wd-card-link">Inquire about {t.name} →</a>
+                </div>
+              ))}
+            </div>
+
+            <div className="wd-addons">
+              <div className="wd-script" style={{ fontSize: 40 }}>Make it yours</div>
+              <p className="wd-lede" style={{ maxWidth: 560, margin: '8px auto 0' }}>Every collection can be extended with lighting, atmosphere, and more.</p>
+              <div className="wd-addon-list">
+                <span className="wd-addon">Uplighting</span>
+                <span className="wd-addon">First-dance fog (venue permitting)</span>
+                <span className="wd-addon">Monogram projection</span>
+                <span className="wd-addon">Extended hours</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="wd-section wd-testimonial">
+          <div className="wd-testimonial-inner">
+            <div className="wd-quote-mark" aria-hidden="true">&ldquo;</div>
+            <blockquote className="wd-quote">Aslan read the room perfectly all night. The dance floor never emptied, and the first dance with the fog was better than we imagined.</blockquote>
+            <div className="wd-quote-by">Recent ASLAN Group couple</div>
+          </div>
+        </section>
+
+        <section id="wd-inquire" className="wd-section wd-dark">
+          <div className="wd-inquire-inner">
+            <div className="wd-inquire-text">
+              <div className="wd-eyebrow">Begin Here</div>
+              <div className="wd-inquire-script">Let&apos;s create</div>
+              <h2 className="wd-h2" style={{ margin: 0 }}>your moment.</h2>
+              <p className="wd-lede" style={{ maxWidth: '44ch' }}>Tell us about your celebration. We will reach out to talk through your vision, your venue, and which collection fits the night you imagine.</p>
+            </div>
+
+            <form className="wd-form" onSubmit={onSubmit}>
+              <input className="hp" type="text" name="_gotcha" tabIndex="-1" autoComplete="off" aria-hidden="true" />
+              <input type="hidden" name="_subject" value="New wedding inquiry – ASLAN website" />
+              <div className="wd-fld">
+                <label htmlFor="w-name">Your name(s)</label>
+                <input className="wd-input" id="w-name" name="name" type="text" required />
+              </div>
+              <div className="wd-fld">
+                <label htmlFor="w-email">Email</label>
+                <input className="wd-input" id="w-email" name="email" type="email" required />
+              </div>
+              <div className="wd-row2">
+                <div className="wd-fld">
+                  <label htmlFor="w-date">Event date</label>
+                  <input className="wd-input" id="w-date" name="date" type="date" />
+                </div>
+                <div className="wd-fld">
+                  <label htmlFor="w-type">Event type</label>
+                  <select className="wd-input" id="w-type" name="event-type">
+                    <option>Wedding</option>
+                    <option>Private celebration</option>
+                    <option>Corporate event</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div className="wd-fld">
+                <label htmlFor="w-msg">The night you imagine</label>
+                <textarea className="wd-input" id="w-msg" name="message" rows="4" />
+              </div>
+              <div>
+                <button className="wd-btn wd-btn-gold" type="submit" disabled={status === 'sending'}>
+                  {status === 'sending' ? 'Sending…' : 'Request a Consultation'}
+                </button>
+              </div>
+              {status === 'ok' && <p className="msg ok" role="status">Thank you. We&apos;ll be in touch within one business day.</p>}
+              {status === 'err' && <p className="msg err" role="alert">Something went wrong. Please try again or email {EMAIL}.</p>}
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer className="wd-footer">
+        <div className="wd-footer-inner">
+          <div>
+            <div className="wd-logo">ASLAN <span>GROUP</span></div>
+            <div className="wd-footer-script">Moments that last.</div>
+          </div>
+          <div className="wd-footer-links">
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            <a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram</a>
+            <span>Toronto &amp; the GTA</span>
+          </div>
+        </div>
+        <div className="wd-footer-bottom">© {new Date().getFullYear()} ASLAN Group. All rights reserved.</div>
+      </footer>
+    </div>
+  )
+}
+
 function Header() {
   return (
     <header className="wrap top">
@@ -88,7 +317,7 @@ function Header() {
         <span>ASLAN</span>
       </a>
       <nav>
-        <a href="/#services">Weddings</a>
+        <a href="/weddings">Weddings</a>
         <a href="/gallery">Gallery</a>
         <a href="/#residencies">Residencies</a>
         <a href="/#about">About</a>
@@ -319,7 +548,9 @@ function Footer() {
 }
 
 export default function App() {
-  const isGallery = window.location.pathname.replace(/\/+$/, '') === '/gallery'
+  const path = window.location.pathname.replace(/\/+$/, '')
+  if (path === '/weddings') return <WeddingsPage />
+  const isGallery = path === '/gallery'
   return (
     <>
       <Header />
