@@ -88,6 +88,43 @@ const wdMoments = [
   { n: '05', title: 'The Last Song', body: 'A finale chosen with you, so the night ends on the exact feeling you want everyone to carry home.', img: '/images/wedding-main-4.jpg' },
 ]
 
+export function NightSection() {
+  return (
+    <section id="night" className="wd-night-section">
+      <div className="wd-night-inner">
+        <div className="wd-night-head">
+          <div className="wd-night-script">Your night,</div>
+          <h2 className="wd-night-title">moment by moment</h2>
+          <p className="wd-night-intro">From the first step into the room to the final song, every moment is shaped on purpose.</p>
+        </div>
+
+        <div className="wd-night">
+          {wdMoments.map((m, i) => {
+            const flip = i % 2 === 1 // moments 02 and 04: picture on the left
+            const text = (
+              <div className="wd-moment-text" key="text">
+                <div className="wd-moment-num">{m.n}</div>
+                <h3 className="wd-moment-title">{m.title}</h3>
+                <p className="wd-moment-body">{m.body}</p>
+              </div>
+            )
+            const pic = (
+              <div className="wd-moment-img" key="pic">
+                <img src={m.img} alt={m.title} loading="lazy" />
+              </div>
+            )
+            return (
+              <div key={m.n} className={'wd-moment' + (flip ? ' rev' : '')}>
+                {flip ? [pic, text] : [text, pic]}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 const wdTiers = [
   { key: 'tier1', label: 'Collection I', name: 'Essential', tagline: 'The foundation of a great night.', items: ['Open-format DJ for your full reception', 'Professional sound system for ceremony & reception', 'Wireless microphones for toasts & speeches'] },
   { key: 'tier2', label: 'Collection II', name: 'Signature', tagline: 'Where the room begins to transform.', items: ['Everything in Essential', 'Custom uplighting for your venue', 'Dedicated MC & timeline coordination with your planner'] },
