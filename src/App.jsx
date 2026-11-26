@@ -88,43 +88,6 @@ const wdMoments = [
   { n: '05', title: 'The Last Song', body: 'A finale chosen with you, so the night ends on the exact feeling you want everyone to carry home.', img: '/images/wedding-main-4.jpg' },
 ]
 
-export function NightSection() {
-  return (
-    <section id="night" className="wd-night-section">
-      <div className="wd-night-inner">
-        <div className="wd-night-head">
-          <div className="wd-night-script">Your night,</div>
-          <h2 className="wd-night-title">moment by moment</h2>
-          <p className="wd-night-intro">From the first step into the room to the final song, every moment is shaped on purpose.</p>
-        </div>
-
-        <div className="wd-night">
-          {wdMoments.map((m, i) => {
-            const flip = i % 2 === 1 // moments 02 and 04: picture on the left
-            const text = (
-              <div className="wd-moment-text" key="text">
-                <div className="wd-moment-num">{m.n}</div>
-                <h3 className="wd-moment-title">{m.title}</h3>
-                <p className="wd-moment-body">{m.body}</p>
-              </div>
-            )
-            const pic = (
-              <div className="wd-moment-img" key="pic">
-                <img src={m.img} alt={m.title} loading="lazy" />
-              </div>
-            )
-            return (
-              <div key={m.n} className={'wd-moment' + (flip ? ' rev' : '')}>
-                {flip ? [pic, text] : [text, pic]}
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 const wdTiers = [
   { key: 'tier1', label: 'Collection I', name: 'Essential', tagline: 'The foundation of a great night.', items: ['Open-format DJ for your full reception', 'Professional sound system for ceremony & reception', 'Wireless microphones for toasts & speeches'] },
   { key: 'tier2', label: 'Collection II', name: 'Signature', tagline: 'Where the room begins to transform.', items: ['Everything in Essential', 'Custom uplighting for your venue', 'Dedicated MC & timeline coordination with your planner'] },
@@ -160,17 +123,10 @@ function WeddingsPage() {
 
   return (
     <div className="wd">
-      <header className="wd-nav">
-        <nav className="wd-nav-inner">
-          <a href="#wd-difference" className="wd-logo">ASLAN <span>GROUP</span></a>
-          <div className="wd-navlinks">
-            <a href="#wd-difference">The Difference</a>
-            <a href="#wd-night">Your Night</a>
-            <a href="#wd-collections">Collections</a>
-            <a href="#wd-inquire" className="wd-btn wd-btn-line" style={{ padding: '13px 26px', fontSize: 12 }}>Book a Consultation</a>
-          </div>
-        </nav>
-      </header>
+      <a href="/" className="wd-back">
+        <span aria-hidden="true">←</span> Back to home
+      </a>
+      <Header />
 
       <main>
         <section id="wd-difference" className="wd-section wd-light">
@@ -328,20 +284,7 @@ function WeddingsPage() {
         </section>
       </main>
 
-      <footer className="wd-footer">
-        <div className="wd-footer-inner">
-          <div>
-            <div className="wd-logo">ASLAN <span>GROUP</span></div>
-            <div className="wd-footer-script">Moments that last.</div>
-          </div>
-          <div className="wd-footer-links">
-            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-            <a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram</a>
-            <span>Toronto &amp; the GTA</span>
-          </div>
-        </div>
-        <div className="wd-footer-bottom">© {new Date().getFullYear()} ASLAN Group. All rights reserved.</div>
-      </footer>
+      <Footer />
     </div>
   )
 }
@@ -350,7 +293,7 @@ function Header() {
   return (
     <header className="wrap top">
       <a href="/#top" className="logo brand" aria-label="ASLAN">
-        <img src="/images/aslan-mark.svg" alt="" width="44" height="44" />
+        <img src="/images/aslan-logo.png" alt="" width="44" height="44" />
         <span>ASLAN</span>
       </a>
       <nav>
@@ -482,7 +425,7 @@ function About() {
   return (
     <section id="about" className="wrap sec">
       <div className="about">
-        <img src="/images/dj-aslan.JPG" alt="Portrait of Aslan" />
+        <img src="/images/aslan-about.jpg" alt="Portrait of Aslan" />
         <div>
           <div className="eyebrow">About</div>
           <h2 className="h2">Deep-house roots. A feel for the room.</h2>
@@ -574,7 +517,7 @@ function Footer() {
   return (
     <footer className="wrap">
       <a href="/#top" className="logo brand" aria-label="ASLAN">
-        <img src="/images/aslan-mark.svg" alt="" width="36" height="36" />
+        <img src="/images/aslan-logo.png" alt="" width="36" height="36" />
         <span>ASLAN</span>
       </a>
       <div>Toronto &amp; the GTA · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></div>
